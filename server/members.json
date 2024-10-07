@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "password123",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "email": "janesmith@example.com",
+    "password": "password456",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 3,
+    "name": "Michael Johnson",
+    "email": "mjohnson@example.com",
+    "password": "password789",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 4,
+    "name": "Emily Davis",
+    "email": "edavis@example.com",
+    "password": "password321",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 5,
+    "name": "Chris Evans",
+    "email": "cevans@example.com",
+    "password": "password654",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 6,
+    "name": "Sarah Wilson",
+    "email": "swilson@example.com",
+    "password": "password987",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 7,
+    "name": "David Brown",
+    "email": "dbrown@example.com",
+    "password": "password159",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 8,
+    "name": "Jessica White",
+    "email": "jwhite@example.com",
+    "password": "password753",
+    "role": "MEMBER",
+    "status": "ACTIVE"
+  }
+]

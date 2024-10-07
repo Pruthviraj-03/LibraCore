@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "title": "The Silent Patient",
+    "author": "Alex Michaelides",
+    "description": "A psychological thriller about a woman who shoots her husband and then never speaks again.",
+    "image": "https://example.com/silent-patient.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Where the Crawdads Sing",
+    "author": "Delia Owens",
+    "description": "A coming-of-age mystery about a girl raised alone in the marshlands of North Carolina.",
+    "image": "https://example.com/crawdads-sing.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Becoming",
+    "author": "Michelle Obama",
+    "description": "The memoir of the former First Lady of the United States, chronicling her life and career.",
+    "image": "https://example.com/becoming.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Educated",
+    "author": "Tara Westover",
+    "description": "A memoir about a woman who grows up in a strict and abusive household in rural Idaho but eventually escapes to learn about the wider world.",
+    "image": "https://example.com/educated.jpg"
+  },
+  {
+    "id": 5,
+    "title": "The Testaments",
+    "author": "Margaret Atwood",
+    "description": "The sequel to 'The Handmaid's Tale,' exploring further the dystopian world of Gilead.",
+    "image": "https://example.com/testaments.jpg"
+  },
+  {
+    "id": 6,
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "description": "A philosophical book about a young shepherd's journey in search of treasure.",
+    "image": "https://example.com/alchemist.jpg"
+  },
+  {
+    "id": 7,
+    "title": "1984",
+    "author": "George Orwell",
+    "description": "A dystopian novel set in a totalitarian society under constant surveillance.",
+    "image": "https://example.com/1984.jpg"
+  },
+  {
+    "id": 8,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "description": "A classic novel about racial injustice in the American South.",
+    "image": "https://example.com/to-kill-a-mockingbird.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Sapiens: A Brief History of Humankind",
+    "author": "Yuval Noah Harari",
+    "description": "A historical account that explores how Homo sapiens came to dominate the world.",
+    "image": "https://example.com/sapiens.jpg"
+  },
+  {
+    "id": 10,
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "description": "A story of wealth, love, and tragedy in 1920s America.",
+    "image": "https://example.com/great-gatsby.jpg"
+  },
+  {
+    "id": 11,
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "description": "A guide on how to build good habits and break bad ones, with a focus on small changes.",
+    "image": "https://example.com/atomic-habits.jpg"
+  },
+  {
+    "id": 12,
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "description": "A novel about teenage alienation and the loss of innocence.",
+    "image": "https://example.com/catcher-in-the-rye.jpg"
+  }
+]
