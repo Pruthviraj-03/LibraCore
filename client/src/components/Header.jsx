@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
+import axios from "axios";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/v1/member/me",
+          { withCredentials: true }
+        );
+        setUserData(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleRefreshPage = () => {
     navigate("/");
-    window.location.reload();
-  };
-
-  const handleBooksRefreshPage = () => {
-    navigate("/books");
     window.location.reload();
   };
 
@@ -37,30 +51,38 @@ const Header = () => {
               </Link>
 
               <Link
-                to="/books"
+                to={userData ? "/books" : "/login"}
                 className="px-2 py-1 text-lg font-medium text-gray-700 rounded hover:bg-gray-900 hover:text-gray-100 mobile:text-sm"
-                onClick={handleBooksRefreshPage}
               >
                 All Books
               </Link>
 
-              <Link
-                to="/members"
-                className="px-2 py-1 text-lg font-medium text-gray-700 rounded hover:bg-gray-900 hover:text-gray-100 mobile:text-sm"
-              >
-                All Members
-              </Link>
+              {userData && userData.role === "librarian" && (
+                <Link
+                  to="/members"
+                  className="px-2 py-1 text-lg font-medium text-gray-700 rounded hover:bg-gray-900 hover:text-gray-100 mobile:text-sm"
+                >
+                  All Members
+                </Link>
+              )}
 
-              <Link
-                to="/history"
-                className="px-2 py-1 text-lg font-medium text-gray-700 rounded hover:bg-gray-900 hover:text-gray-100 mobile:text-sm"
-              >
-                History
-              </Link>
+              {userData && userData.role === "members" && (
+                <Link
+                  to="/history"
+                  className="px-2 py-1 text-lg font-medium text-gray-700 rounded hover:bg-gray-900 hover:text-gray-100 mobile:text-sm"
+                >
+                  History
+                </Link>
+              )}
             </div>
           </div>
-          <Button to="/login" text="Login" />
-          <Button to="/profile" text="Profile" />
+          {userData ? (
+            <Link to="/profile">
+              <FaUserCircle className="text-5xl text-gray-600" />
+            </Link>
+          ) : (
+            <Button to="/login" text="Login" />
+          )}
         </div>
       </div>
     </div>

@@ -5,6 +5,23 @@ import { Button, Spinner } from "./index";
 const LimBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/v1/member/me",
+          { withCredentials: true }
+        );
+        setUserData(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const getData = async () => {
     try {
@@ -51,9 +68,11 @@ const LimBooks = () => {
                   <p className="mt-1 text-sm text-gray-600">{description}</p>
                 </div>
 
-                <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
-                  <span className="text-2xl">BORROW BOOK</span>
-                </div>
+                {userData && userData.role === "members" && (
+                  <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
+                    <span className="text-2xl">BORROW BOOK</span>
+                  </div>
+                )}
               </div>
             );
           })}
