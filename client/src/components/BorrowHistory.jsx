@@ -2,11 +2,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Spinner } from "./index";
 import { FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const BorrowHistory = () => {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/v1/users/me",
+          { withCredentials: true }
+        );
+        setUserData(response.data.data.user);
+      } catch (error) {
+        console.log(error);
+        navigate("/login");
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
 
   const getData = async () => {
     try {
@@ -85,9 +105,11 @@ const BorrowHistory = () => {
                       </h1>
                     </div>
 
-                    <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
-                      <span className="text-2xl">RETURNED BOOK</span>
-                    </div>
+                    {userData && userData.role === "MEMBER" && (
+                      <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
+                        <span className="text-2xl">RETURNED BOOK</span>
+                      </div>
+                    )}
                   </div>
                 );
               })}
