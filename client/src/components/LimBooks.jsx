@@ -11,10 +11,10 @@ const LimBooks = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/member/me",
+          "http://localhost:8000/api/v1/users/me",
           { withCredentials: true }
         );
-        setUserData(response.data.data);
+        setUserData(response.data.data.user);
       } catch (error) {
         console.log(error);
       }
@@ -68,9 +68,15 @@ const LimBooks = () => {
                   <p className="mt-1 text-sm text-gray-600">{description}</p>
                 </div>
 
-                {userData && userData.role === "members" && (
+                {userData && userData.role === "MEMBER" && (
                   <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
                     <span className="text-2xl">BORROW BOOK</span>
+                  </div>
+                )}
+
+                {userData && userData.role === "LIBRARIAN" && (
+                  <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
+                    <span className="text-2xl">DELETE BOOK</span>
                   </div>
                 )}
               </div>

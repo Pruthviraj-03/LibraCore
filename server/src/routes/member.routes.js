@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {
-  getMyData,
   getBorrowBooks,
   getReturnBooks,
   getHistoryMe,
@@ -10,7 +9,6 @@ import { authMiddleWare } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/me").get(authMiddleWare, getMyData);
 router.route("/me/borrowed").get(authMiddleWare, getBorrowBooks);
 router.route("/me/returned").get(authMiddleWare, getReturnBooks);
 router.route("/me/history").get(authMiddleWare, getHistoryMe);

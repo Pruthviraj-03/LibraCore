@@ -12,10 +12,10 @@ const Header = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/member/me",
+          "http://localhost:8000/api/v1/users/me",
           { withCredentials: true }
         );
-        setUserData(response.data.data);
+        setUserData(response.data.data.user);
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +57,7 @@ const Header = () => {
                 All Books
               </Link>
 
-              {userData && userData.role === "librarian" && (
+              {userData && userData.role === "LIBRARIAN" && (
                 <Link
                   to="/members"
                   className="px-2 py-1 text-lg font-medium text-gray-700 rounded hover:bg-gray-900 hover:text-gray-100 mobile:text-sm"
@@ -66,7 +66,7 @@ const Header = () => {
                 </Link>
               )}
 
-              {userData && userData.role === "members" && (
+              {userData && userData.role === "MEMBER" && (
                 <Link
                   to="/history"
                   className="px-2 py-1 text-lg font-medium text-gray-700 rounded hover:bg-gray-900 hover:text-gray-100 mobile:text-sm"

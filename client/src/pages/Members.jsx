@@ -8,17 +8,17 @@ import { useNavigate } from "react-router-dom";
 const Members = () => {
   const [members, setMembers] = useState([]);
   const [search, setSearch] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/member/me",
+          "http://localhost:8000/api/v1/users/me",
           { withCredentials: true }
         );
-        setUserData(response.data.data);
+        setUserData(response.data.data.user);
       } catch (error) {
         console.log(error);
         navigate("/login");
@@ -34,24 +34,23 @@ const Members = () => {
         "http://localhost:8000/api/v1/librarian/members"
       );
       setMembers(res.data.data || []);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    if (userData) {
-      getData();
-    } else {
+    if (!userData) {
       navigate("/login");
+    } else {
+      getData();
     }
-  }, [userData, navigate]);
+  }, []);
 
   return (
     <>
       <Header />
-      {userData && userData.role === "librarian" && (
+      {userData && userData.role === "LIBRARIAN" && (
         <div className="bg-gray-100 tablet:pt-40 mobile:pt-10 laptop:pt-0">
           <div className="pc:container flex mx-auto mb-10 mobile:m-2 pt-20">
             <FiSearch className="text-4xl m-auto relative left-10 text-gray-400" />

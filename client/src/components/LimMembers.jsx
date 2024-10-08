@@ -11,10 +11,10 @@ const LimMembers = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/member/me",
+          "http://localhost:8000/api/v1/users/me",
           { withCredentials: true }
         );
-        setUserData(response.data.data);
+        setUserData(response.data.data.user);
       } catch (error) {
         console.log(error);
       }
@@ -41,7 +41,7 @@ const LimMembers = () => {
 
   return (
     <>
-      {userData && userData.role === "librarian" && (
+      {userData && userData.role === "LIBRARIAN" && (
         <div className="bg-gray-100 py-10 tablet:pt-40 mobile:pt-10 laptop:pt-0">
           <div className="pc:container mx-auto flex flex-wrap gap-10 py-10">
             {members.slice(0, 5).map((curElem) => {

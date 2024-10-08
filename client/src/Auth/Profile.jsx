@@ -5,17 +5,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/member/me",
+          "http://localhost:8000/api/v1/users/me",
           { withCredentials: true }
         );
-        setUserData(response.data.data);
+        setUserData(response.data.data.user);
       } catch (error) {
         if (error.response && error.response.status === 401) {
           navigate("/login");
@@ -34,9 +34,12 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:8000/api/v1/users/logout", {
-        withCredentials: true,
-      });
+      await axios.post(
+        "http://localhost:8000/api/v1/users/logout",
+        {},
+        { withCredentials: true }
+      );
+      setUserData(null);
       navigate("/login");
     } catch (error) {
       console.error("Error during logout:", error);
@@ -49,7 +52,7 @@ const Profile = () => {
         await axios.delete("http://localhost:8000/api/v1/member/deleteme", {
           withCredentials: true,
         });
-        navigate("/login");
+        navigate("/");
       } catch (error) {
         console.error("Error during account deletion:", error);
       }

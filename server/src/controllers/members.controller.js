@@ -3,22 +3,6 @@ import { ApiError } from "../utils/ApiError.utils.js";
 import { ApiResponse } from "../utils/ApiResponse.utils.js";
 import { asyncHandler } from "../utils/AsyncHandler.utils.js";
 
-// Get My Data
-const getMyData = asyncHandler(async (req, res) => {
-  try {
-    const userId = req.user._id;
-    const user = await users.findById(userId).select("-password");
-    if (!user) {
-      throw new ApiError(404, "User not found");
-    }
-    res
-      .status(200)
-      .json(new ApiResponse(200, user, "User data retrieved successfully"));
-  } catch (error) {
-    throw new ApiError(500, "Internal server error");
-  }
-});
-
 // Get Borrowed Books
 const getBorrowBooks = asyncHandler(async (req, res) => {
   const userId = req.user.id;
@@ -94,4 +78,4 @@ const deleteMe = asyncHandler(async (req, res) => {
 });
 
 // Exporting the controller methods
-export { getMyData, getBorrowBooks, getReturnBooks, getHistoryMe, deleteMe };
+export { getBorrowBooks, getReturnBooks, getHistoryMe, deleteMe };

@@ -141,11 +141,40 @@ const login = asyncHandler(async (req, res) => {
 
 // Logout Controller
 const logout = asyncHandler(async (req, res) => {
-  res
-    .status(200)
-    .cookie("accessToken", "", { expires: new Date(0), httpOnly: true })
-    .cookie("refreshToken", "", { expires: new Date(0), httpOnly: true })
-    .json(new ApiResponse(200, {}, "Logged out successfully"));
+  try {
+    const options = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    };
+    res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .clearCookie("userId", options)
+      .clearCookie("user", options)
+      .json(new ApiResponse(200, {}, "User logged out successfully"));
+
+    console.log("User logged out successfully");
+  } catch (error) {
+    console.log("Failed to logout:", error);
+    throw new ApiError(401, error?.message || "Failed to logout");
+  }
 });
 
-export { refreshAccessToken, signup, login, logout };
+// Get My Data Controller
+const getMyData = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  const user = await users.findById(userId).select("-password -refreshToken");
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, { user }, "User data retrieved successfully"));
+});
+
+export { refreshAccessToken, signup, login, logout, getMyData };

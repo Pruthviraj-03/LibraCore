@@ -11,10 +11,10 @@ const History = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/member/me",
+          "http://localhost:8000/api/v1/users/me",
           { withCredentials: true }
         );
-        setUserData(response.data.data);
+        setUserData(response.data.data.user);
       } catch (error) {
         console.log(error);
         navigate("/login");
@@ -26,7 +26,7 @@ const History = () => {
 
   return (
     <div>
-      {userData && userData.role === "member" && (
+      {userData && userData.role === "MEMBER" && (
         <>
           <Header />
           <BorrowHistory />
