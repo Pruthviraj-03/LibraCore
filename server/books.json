@@ -1,86 +1,122 @@
 [
   {
     "id": 1,
-    "title": "The Silent Patient",
-    "author": "Alex Michaelides",
-    "description": "A psychological thriller about a woman who shoots her husband and then never speaks again.",
-    "image": "https://example.com/silent-patient.jpg"
+    "title": "COUNTING MIRACLES",
+    "author": "Nicholas Sparks",
+    "description": "A man in search of the father he never knew encounters a single mom and rumors circulate of the nearby appearance of a white deer.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780593449592.jpg"
   },
   {
     "id": 2,
-    "title": "Where the Crawdads Sing",
-    "author": "Delia Owens",
-    "description": "A coming-of-age mystery about a girl raised alone in the marshlands of North Carolina.",
-    "image": "https://example.com/crawdads-sing.jpg"
+    "title": "INTERMEZZO",
+    "author": "Sally Rooney",
+    "description": "After the passing of their father, seemingly different brothers engage in relationships and seek ways to cope.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780374602635.jpg"
   },
   {
     "id": 3,
-    "title": "Becoming",
-    "author": "Michelle Obama",
-    "description": "The memoir of the former First Lady of the United States, chronicling her life and career.",
-    "image": "https://example.com/becoming.jpg"
+    "title": "THE WOMEN",
+    "author": "Kristin Hannah",
+    "description": "In 1965, a nursing student follows her brother to serve during the Vietnam War and returns to a divided America.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9781250178633.jpg"
   },
   {
     "id": 4,
-    "title": "Educated",
-    "author": "Tara Westover",
-    "description": "A memoir about a woman who grows up in a strict and abusive household in rural Idaho but eventually escapes to learn about the wider world.",
-    "image": "https://example.com/educated.jpg"
+    "title": "HERE ONE MOMENT",
+    "author": "Liane Moriarty",
+    "description": "Passengers on a short and seemingly unremarkable flight learn how and when they are going to die.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780593798607.jpg"
   },
   {
     "id": 5,
-    "title": "The Testaments",
-    "author": "Margaret Atwood",
-    "description": "The sequel to 'The Handmaid's Tale,' exploring further the dystopian world of Gilead.",
-    "image": "https://example.com/testaments.jpg"
+    "title": "PLAYGROUND",
+    "author": "Richard Powers",
+    "description": "Residents of an island in French Polynesia must vote on whether to send floating cities out onto the open sea.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9781324086031.jpg"
   },
   {
     "id": 6,
-    "title": "The Alchemist",
-    "author": "Paulo Coelho",
-    "description": "A philosophical book about a young shepherd's journey in search of treasure.",
-    "image": "https://example.com/alchemist.jpg"
+    "title": "IRON FLAME",
+    "author": "Rebecca Yarros",
+    "description": "The second book in the Empyrean series. Violet Sorrengail’s next round of training might require her to betray the man she loves.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9781649374172.jpg"
   },
   {
     "id": 7,
-    "title": "1984",
-    "author": "George Orwell",
-    "description": "A dystopian novel set in a totalitarian society under constant surveillance.",
-    "image": "https://example.com/1984.jpg"
+    "title": "THE LIFE IMPOSSIBLE",
+    "author": "Matt Haig",
+    "description": "A retired math teacher who inherits a run-down house on a Mediterranean island from a friend goes in search of answers.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780593489277.jpg"
   },
   {
     "id": 8,
-    "title": "To Kill a Mockingbird",
-    "author": "Harper Lee",
-    "description": "A classic novel about racial injustice in the American South.",
-    "image": "https://example.com/to-kill-a-mockingbird.jpg"
+    "title": "SOMEWHERE BEYOND THE SEA",
+    "author": "TJ Klune",
+    "description": "The second book in the Cerulean Chronicles series. The headmaster of a strange orphanage seeks to protect the magical children who reside there.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9781250881205.jpg"
   },
   {
     "id": 9,
-    "title": "Sapiens: A Brief History of Humankind",
-    "author": "Yuval Noah Harari",
-    "description": "A historical account that explores how Homo sapiens came to dominate the world.",
-    "image": "https://example.com/sapiens.jpg"
+    "title": "TELL ME EVERYTHING",
+    "author": "Elizabeth Strout",
+    "description": "As a murder casts a pall on a town in Maine, Lucy Barton, Olive Kitteridge and Bob Burgess share stories and seek meaning.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780593446096.jpg"
   },
   {
     "id": 10,
-    "title": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald",
-    "description": "A story of wealth, love, and tragedy in 1920s America.",
-    "image": "https://example.com/great-gatsby.jpg"
+    "title": "THE NIGHT WE LOST HIM",
+    "author": "Laura Dave",
+    "description": "Estranged siblings look into the death of their hotel magnate father and uncover a family secret.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9781668002933.jpg"
   },
   {
     "id": 11,
-    "title": "Atomic Habits",
-    "author": "James Clear",
-    "description": "A guide on how to build good habits and break bad ones, with a focus on small changes.",
-    "image": "https://example.com/atomic-habits.jpg"
+    "title": "THE GAMES GODS PLAY",
+    "author": "Abigail Owen",
+    "description": "Gods enlist mortals to fight in their stead to determine who will sit on the throne in Olympus.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9781649376565.jpg"
   },
   {
     "id": 12,
-    "title": "The Catcher in the Rye",
-    "author": "J.D. Salinger",
-    "description": "A novel about teenage alienation and the loss of innocence.",
-    "image": "https://example.com/catcher-in-the-rye.jpg"
+    "title": "THE GOD OF THE WOODS",
+    "author": "Liz Moore",
+    "description": "When a 13-year-old girl disappears from an Adirondack summer camp in 1975, secrets kept by the Van Laar family emerge.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780593418918.jpg"
+  },
+  {
+    "id": 13,
+    "title": "WE SOLVE MURDERS",
+    "author": "Richard Osman",
+    "description": "When a dead body and a bag of money turn up on a remote island, Amy Wheeler reaches out to her retired father-in-law to help investigate.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780593653227.jpg"
+  },
+  {
+    "id": 14,
+    "title": "THE BUTCHER GAME",
+    "author": "Alaina Urquhart",
+    "description": "The second book in the Dr. Wren Muller series. A serial killer wants to settle a score with a forensic pathologist.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9781638931249.jpg"
+  },
+  {
+    "id": 15,
+    "title": "BY ANY OTHER NAME",
+    "author": "Jodi Picoult",
+    "description": "A young woman’s play about her ancestor Emilia Bassano, who wrote Shakespeare’s works, is submitted to a festival under a male pseudonym.",
+    "status": "AVAILABLE",
+    "image": "https://storage.googleapis.com/du-prd/books/images/9780593497210.jpg"
   }
 ]

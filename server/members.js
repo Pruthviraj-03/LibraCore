@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { connectDB } from "./src/configs/db.js";
-import { users } from "./src/models/video.model.js";
+import { Members } from "./src/models/members.model.js";
 import fs from "fs/promises";
 
 dotenv.config({
@@ -17,15 +17,15 @@ const loadData = async (filePath) => {
   }
 };
 
-const members = async () => {
+const member = async () => {
   try {
     await connectDB(process.env.MONGODB_URL);
-    const membersData = await loadData("./users.json");
-    await users.create(membersData);
+    const membersData = await loadData("./members.json");
+    await Members.create(membersData);
     console.log("success");
   } catch (error) {
     console.error(error);
   }
 };
 
-members();
+member();

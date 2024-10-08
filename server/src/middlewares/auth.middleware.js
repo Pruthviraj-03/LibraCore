@@ -1,6 +1,6 @@
 import { ApiError } from "../utils/ApiError.utils.js";
 import { asyncHandler } from "../utils/AsyncHandler.utils.js";
-import { User } from "../models/user.model.js";
+import { users } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
 const authMiddleWare = asyncHandler(async (req, res, next) => {
@@ -17,7 +17,7 @@ const authMiddleWare = asyncHandler(async (req, res, next) => {
       throw new ApiError(401, "Invalid or expired token");
     }
 
-    const user = await User.findById(decodedToken.id).select("-refreshToken");
+    const user = await users.findById(decodedToken.id).select("-refreshToken");
     if (!user) {
       throw new ApiError(401, "Invalid Access Token");
     }

@@ -1,4 +1,4 @@
-import { BorrowHistory } from "../models/borrowHistory.model.js";
+import { BorrowHistory } from "../models/history.model.js";
 import { ApiError } from "../utils/ApiError.utils.js";
 import { ApiResponse } from "../utils/ApiResponse.utils.js";
 import { asyncHandler } from "../utils/AsyncHandler.utils.js";

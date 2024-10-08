@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { connectDB } from "./src/configs/db.js";
-import { books } from "./src/models/video.model.js";
+import { books } from "./src/models/books.model.js";
 import fs from "fs/promises";
 
 dotenv.config({

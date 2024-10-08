@@ -1,11 +1,12 @@
 import { users } from "../models/user.model.js";
+import { Members } from "../models/members.model.js";
 import { ApiError } from "../utils/ApiError.utils.js";
 import { ApiResponse } from "../utils/ApiResponse.utils.js";
 import { asyncHandler } from "../utils/AsyncHandler.utils.js";
 
 // Get All Members
 const getAllMembers = asyncHandler(async (req, res) => {
-  const members = await users.find({ role: "MEMBER", status: "ACTIVE" });
+  const members = await Members.find({ role: "MEMBER", status: "ACTIVE" });
 
   if (!members || members.length === 0) {
     throw new ApiError(404, "No members found");

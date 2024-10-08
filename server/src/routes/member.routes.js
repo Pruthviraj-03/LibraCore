@@ -5,7 +5,7 @@ import {
   getReturnBooks,
   getHistoryMe,
   deleteMe,
-} from "../controllers/member.controller.js";
+} from "../controllers/members.controller.js";
 import { authMiddleWare } from "../middlewares/auth.middleware.js";
 
 const router = Router();

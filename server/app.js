@@ -43,7 +43,7 @@ app.use(
 );
 
 //routes import
-import { router as userRouter } from "./src/routes/user.routes.js";
+import { router as userRouter } from "./src/routes/users.routes.js";
 import { router as booksRouter } from "./src/routes/books.routes.js";
 import { router as historyRouter } from "./src/routes/history.routes.js";
 import { router as librarianRouter } from "./src/routes/librarian.routes.js";

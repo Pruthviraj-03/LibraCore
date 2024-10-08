@@ -9,10 +9,10 @@ import { authMiddleWare } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/books").get(getAllBooks).post(authMiddleWare, addNewBook);
+router.route("/allbooks").get(getAllBooks).post(authMiddleWare, addNewBook);
 
 router
-  .route("/books/:id")
+  .route("/allbooks/:id")
   .put(authMiddleWare, updateBook)
   .delete(authMiddleWare, deleteBook);
 

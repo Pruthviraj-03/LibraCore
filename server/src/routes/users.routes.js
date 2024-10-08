@@ -4,7 +4,7 @@ import {
   signup,
   login,
   logout,
-} from "../controllers/users.controller.js";
+} from "../controllers/user.controller.js";
 import { authMiddleWare } from "../middlewares/auth.middleware.js";
 
 const router = Router();

@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   getBorrowHistory,
   getReturnHistory,
-} from "../controllers/librarian.controller.js";
+} from "../controllers/history.controller.js";
 import { authMiddleWare } from "../middlewares/auth.middleware.js";
 
 const router = Router();
