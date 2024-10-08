@@ -49,7 +49,7 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
       try {
-        await axios.delete("http://localhost:8000/api/v1/member/deleteme", {
+        await axios.delete("http://localhost:8000/api/v1/users/deleteme", {
           withCredentials: true,
         });
         navigate("/");

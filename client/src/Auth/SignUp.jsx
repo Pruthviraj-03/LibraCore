@@ -94,7 +94,8 @@ const SignUp = () => {
                   <div className="flex items-center">
                     <input
                       type={InputType}
-                      minLength="8"
+                      minLength="5"
+                      maxLength="15"
                       placeholder="enter your password"
                       name="passwords"
                       value={userLogin.passwords}

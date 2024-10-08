@@ -1,12 +1,11 @@
 import { users } from "../models/user.model.js";
-import { Members } from "../models/members.model.js";
 import { ApiError } from "../utils/ApiError.utils.js";
 import { ApiResponse } from "../utils/ApiResponse.utils.js";
 import { asyncHandler } from "../utils/AsyncHandler.utils.js";
 
 // Get All Members
 const getAllMembers = asyncHandler(async (req, res) => {
-  const members = await Members.find({ role: "MEMBER", status: "ACTIVE" });
+  const members = await users.find({ role: "MEMBER", status: "ACTIVE" });
 
   if (!members || members.length === 0) {
     throw new ApiError(404, "No members found");
@@ -15,6 +14,24 @@ const getAllMembers = asyncHandler(async (req, res) => {
   res
     .status(200)
     .json(new ApiResponse(200, members, "Members retrieved successfully"));
+});
+
+const getMemberData = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const member = await users.findById(id);
+
+  if (!member) {
+    throw new ApiError(404, "Member not found");
+  }
+
+  if (member.status === "DELETED") {
+    throw new ApiError(404, "Member not found");
+  }
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, { member }, "Member data retrieved successfully")
+    );
 });
 
 // Delete a Member
@@ -35,4 +52,4 @@ const deleteMember = asyncHandler(async (req, res) => {
 });
 
 // Exporting the controller methods
-export { getAllMembers, deleteMember };
+export { getAllMembers, getMemberData, deleteMember };

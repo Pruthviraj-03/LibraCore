@@ -79,6 +79,7 @@ const Members = () => {
                 return (
                   <div
                     key={curElem.id}
+                    onClick={() => navigate(`/member/${curElem._id}`)}
                     className="cursor-pointer w-64 h-80 mx-auto bg-white rounded-lg shadow-xl border flex flex-col justify-center items-center"
                   >
                     <div className="flex justify-center py-6">

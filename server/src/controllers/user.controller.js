@@ -162,6 +162,34 @@ const logout = asyncHandler(async (req, res) => {
   }
 });
 
+// Delete Me Controller
+const deleteMe = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  // Find and delete the user
+  const user = await users.findByIdAndDelete(userId);
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  // Clear cookies
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
+  };
+  res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .clearCookie("userId", options)
+    .clearCookie("user", options)
+    .json(new ApiResponse(200, {}, "User account deleted successfully"));
+
+  console.log("User account deleted successfully");
+});
+
 // Get My Data Controller
 const getMyData = asyncHandler(async (req, res) => {
   const userId = req.user._id;
@@ -177,4 +205,4 @@ const getMyData = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { user }, "User data retrieved successfully"));
 });
 
-export { refreshAccessToken, signup, login, logout, getMyData };
+export { refreshAccessToken, signup, login, logout, deleteMe, getMyData };

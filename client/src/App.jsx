@@ -10,7 +10,7 @@ const App = () => {
       <Route exact path="/books" element={<Books />} />
       <Route exact path="/members" element={<Members />} />
       <Route exact path="/history" element={<History />} />
-      <Route exact path="/member" element={<Member />} />
+      <Route exact path="/member/:id" element={<Member />} />
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/signup" element={<SignUp />} />
       <Route exact path="/profile" element={<Profile />} />

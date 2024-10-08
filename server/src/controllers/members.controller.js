@@ -63,19 +63,5 @@ const getHistoryMe = asyncHandler(async (req, res) => {
     );
 });
 
-// Delete My Account
-const deleteMe = asyncHandler(async (req, res) => {
-  const userId = req.user.id;
-  const user = await users.findByIdAndDelete(userId);
-
-  if (!user) {
-    throw new ApiError(404, "User not found");
-  }
-
-  res
-    .status(204)
-    .json(new ApiResponse(204, {}, "User account deleted successfully"));
-});
-
 // Exporting the controller methods
-export { getBorrowBooks, getReturnBooks, getHistoryMe, deleteMe };
+export { getBorrowBooks, getReturnBooks, getHistoryMe };

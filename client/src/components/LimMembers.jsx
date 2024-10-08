@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "./index";
 import { FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const LimMembers = () => {
+  const navigate = useNavigate();
   const [members, setMembers] = useState([]);
   const [userData, setUserData] = useState(null);
 
@@ -50,6 +52,7 @@ const LimMembers = () => {
               return (
                 <div
                   key={curElem.id}
+                  onClick={() => navigate(`/member/${curElem._id}`)}
                   className="cursor-pointer w-64 h-80 mx-auto bg-white rounded-lg shadow-xl border flex flex-col justify-center items-center"
                 >
                   <div className="flex justify-center py-6">

@@ -4,6 +4,7 @@ import {
   signup,
   login,
   logout,
+  deleteMe,
   getMyData,
 } from "../controllers/user.controller.js";
 import { authMiddleWare } from "../middlewares/auth.middleware.js";
@@ -17,6 +18,8 @@ router.route("/signup").post(signup);
 router.route("/login").post(login);
 
 router.route("/logout").post(authMiddleWare, logout);
+
+router.route("/deleteme").delete(authMiddleWare, deleteMe);
 
 router.route("/me").get(authMiddleWare, getMyData);
 

@@ -6,10 +6,12 @@ import {
   BorrowHistory,
   ReturnHistory,
 } from "../components/index";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Member = () => {
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [memberData, setMemberData] = useState(null);
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,15 +31,40 @@ const Member = () => {
     fetchUserData();
   }, [navigate]);
 
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/v1/librarian/members/${id}`,
+          { withCredentials: true }
+        );
+        setMemberData(response.data.data.member);
+      } catch (error) {
+        console.log(error);
+        navigate("/login");
+      }
+    };
+
+    fetchMemberData();
+  }, [id, navigate]);
+
   return (
     <div>
-      {userData && userData.role === "LIBRARIAN" && (
+      {userData && userData.role === "LIBRARIAN" ? (
         <>
           <Header />
-          <MemberData />
-          <BorrowHistory />
-          <ReturnHistory />
+          {memberData ? (
+            <>
+              <MemberData memberData={memberData} />
+              <BorrowHistory memberData={memberData} />
+              <ReturnHistory memberData={memberData} />
+            </>
+          ) : (
+            <div>No member data found.</div>
+          )}
         </>
+      ) : (
+        <div>Access Denied. Only librarians can view this page.</div>
       )}
     </div>
   );
