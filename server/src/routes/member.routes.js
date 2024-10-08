@@ -10,7 +10,6 @@ import { authMiddleWare } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-// Define routes using router.route()
 router.route("/me").get(authMiddleWare, getMyData);
 router.route("/me/borrowed").get(authMiddleWare, getBorrowBooks);
 router.route("/me/returned").get(authMiddleWare, getReturnBooks);

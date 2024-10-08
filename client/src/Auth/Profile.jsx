@@ -1,13 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProfilePng from "../Images/profile.png";
 import { Header } from "../components/index";
-import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/v1/member/me",
+          {
+            withCredentials: true,
+          }
+        );
+        setUserData(response.data.data);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          navigate("/login");
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
+
+  const handleLogout = () => {
+    axios
+      .post(
+        "http://localhost:8000/api/v1/member/logout",
+        {},
+        { withCredentials: true }
+      )
+      .then(() => {
+        navigate("/login");
+      });
+  };
+
   return (
     <>
       <Header />
-
       <div className="flex justify-center">
         <div className="font-nunito w-3/5 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full mobile:px-0">
           <form method="GET">
@@ -21,7 +56,7 @@ const Profile = () => {
                         Full Name :
                       </label>
                       <p className="text-xl font-medium text-gray-700">
-                        Rohan Kurane
+                        {userData.name || "N/A"}
                       </p>
                     </div>
                     <div className="pt-5">
@@ -29,13 +64,13 @@ const Profile = () => {
                         Email id :
                       </label>
                       <p className="text-xl font-medium text-gray-700">
-                        rohan@gmail.com
+                        {userData.email || "N/A"}
                       </p>
                     </div>
                     <div className="pt-5">
                       <label className="text-lg text-gray-500">Role :</label>
                       <p className="text-xl font-medium text-gray-700">
-                        Member
+                        {userData.role || "N/A"}
                       </p>
                     </div>
 
@@ -43,6 +78,8 @@ const Profile = () => {
                       <button
                         className="bg-gray-600 text-white font-nunito font-semibold p-2 rounded-md shadow-md mt-10 
                           mobile:py-2 w-48 mobile:w-full  hover:bg-white hover:text-gray-600 cursor-pointer hover:border hover:border-black"
+                        type="button"
+                        onClick={handleLogout}
                       >
                         Log Out
                       </button>
@@ -61,7 +98,7 @@ const Profile = () => {
                     className="mobile:hidden tablet:hidden"
                     style={{ width: "500px" }}
                   >
-                    <img src={ProfilePng} alt="login svg" />
+                    <img src={ProfilePng} alt="Profile illustration" />
                   </div>
                 </div>
               </div>

@@ -60,6 +60,7 @@ const Header = () => {
             </div>
           </div>
           <Button to="/login" text="Login" />
+          <Button to="/profile" text="Profile" />
         </div>
       </div>
     </div>

@@ -5,21 +5,23 @@ import { asyncHandler } from "../utils/AsyncHandler.utils.js";
 
 // Get My Data
 const getMyData = asyncHandler(async (req, res) => {
-  const userId = req.user.id; // assuming user ID is stored in req.user after authentication
-  const user = await users.findById(userId).select("-password"); // exclude password from response
-
-  if (!user) {
-    throw new ApiError(404, "User not found");
+  try {
+    const userId = req.user._id;
+    const user = await users.findById(userId).select("-password");
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, user, "User data retrieved successfully"));
+  } catch (error) {
+    throw new ApiError(500, "Internal server error");
   }
-
-  res
-    .status(200)
-    .json(new ApiResponse(200, user, "User data retrieved successfully"));
 });
 
 // Get Borrowed Books
 const getBorrowBooks = asyncHandler(async (req, res) => {
-  const userId = req.user.id; // assuming user ID is stored in req.user after authentication
+  const userId = req.user.id;
   const user = await users.findById(userId);
 
   if (!user) {
@@ -39,7 +41,7 @@ const getBorrowBooks = asyncHandler(async (req, res) => {
 
 // Get Returned Books
 const getReturnBooks = asyncHandler(async (req, res) => {
-  const userId = req.user.id; // assuming user ID is stored in req.user after authentication
+  const userId = req.user.id;
   const user = await users.findById(userId);
 
   if (!user) {
@@ -59,7 +61,7 @@ const getReturnBooks = asyncHandler(async (req, res) => {
 
 // Get Borrow/Return History
 const getHistoryMe = asyncHandler(async (req, res) => {
-  const userId = req.user.id; // assuming user ID is stored in req.user after authentication
+  const userId = req.user.id;
   const user = await users.findById(userId);
 
   if (!user) {
@@ -79,7 +81,7 @@ const getHistoryMe = asyncHandler(async (req, res) => {
 
 // Delete My Account
 const deleteMe = asyncHandler(async (req, res) => {
-  const userId = req.user.id; // assuming user ID is stored in req.user after authentication
+  const userId = req.user.id;
   const user = await users.findByIdAndDelete(userId);
 
   if (!user) {
