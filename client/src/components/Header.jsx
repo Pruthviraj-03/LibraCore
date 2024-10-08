@@ -59,7 +59,7 @@ const Header = () => {
               </Link>
             </div>
           </div>
-          <Button to="/profile" text="Login" />
+          <Button to="/login" text="Login" />
         </div>
       </div>
     </div>

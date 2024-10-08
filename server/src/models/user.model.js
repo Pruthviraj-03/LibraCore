@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
       enum: ["ACTIVE", "DELETED"],
       default: "ACTIVE",
     },
-    borrowedBooks: [
+    history: [
       {
         bookId: {
           type: mongoose.Schema.Types.ObjectId,

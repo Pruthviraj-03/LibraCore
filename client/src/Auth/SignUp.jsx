@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import login from "../Images/signup.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Header } from "../components/index";
+import axios from "axios"; // Import Axios
 
 const SignUp = () => {
   const [visible, setVisible] = useState(false);
   const InputType = visible ? "text" : "password";
+  const navigate = useNavigate();
 
   const [userLogin, setUserLogin] = useState({
     name: "",
@@ -15,9 +17,39 @@ const SignUp = () => {
     role: "MEMBER",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const handleInputs = (e) => {
     const { name, value } = e.target;
     setUserLogin({ ...userLogin, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // API call to backend
+      const response = await axios.post("/api/v1/users/signup", {
+        name: userLogin.name,
+        email: userLogin.email,
+        password: userLogin.passwords,
+        role: userLogin.role,
+      });
+
+      // Handle success
+      setSuccessMessage("Signup successful! Redirecting to login...");
+      setTimeout(() => {
+        navigate("/login"); // Redirect to login page after signup
+      }, 2000);
+    } catch (error) {
+      // Handle error
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.message || "Signup failed");
+      } else {
+        setErrorMessage("An error occurred during signup");
+      }
+    }
   };
 
   return (
@@ -34,7 +66,7 @@ const SignUp = () => {
             </div>
             <div className="container max-w-full">
               <div className="max-w-sm mx-auto px-6">
-                <form autoComplete="off">
+                <form autoComplete="off" onSubmit={handleSubmit}>
                   <div>
                     <span className="px-1 text-lg font-semibold text-gray-700">
                       Name
@@ -90,7 +122,6 @@ const SignUp = () => {
                     </span>
                   </div>
 
-                  {/* Role Selection Dropdown */}
                   <div className="my-3">
                     <span className="px-1 text-lg font-semibold text-gray-700">
                       Role
@@ -114,12 +145,23 @@ const SignUp = () => {
                   </button>
                 </form>
 
+                {errorMessage && (
+                  <div className="text-red-500 text-center mt-3">
+                    {errorMessage}
+                  </div>
+                )}
+                {successMessage && (
+                  <div className="text-green-500 text-center mt-3">
+                    {successMessage}
+                  </div>
+                )}
+
                 <div className="text-gray-700 text-sm font-semibold px-2 my-6 flex flex-col justify-center items-center gap-2">
                   <Link
                     to="/login"
                     className="border-b border-gray-200 cursor-pointer"
                   >
-                    already register? CLICK ME
+                    already registered? CLICK ME
                   </Link>
                 </div>
               </div>
