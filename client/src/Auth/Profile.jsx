@@ -28,16 +28,19 @@ const Profile = () => {
     fetchUserData();
   }, [navigate]);
 
-  const handleLogout = () => {
-    axios
-      .post(
-        "http://localhost:8000/api/v1/member/logout",
-        {},
-        { withCredentials: true }
-      )
-      .then(() => {
-        navigate("/login");
-      });
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8000/api/v1/users/logout",
+        {}, // Sending an empty object as the body
+        { withCredentials: true } // Ensure cookies are sent with the request
+      );
+      // Navigate to login after successful logout
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      // Optionally handle specific errors or show a notification
+    }
   };
 
   return (
@@ -77,7 +80,7 @@ const Profile = () => {
                     <div className="flex flex-col">
                       <button
                         className="bg-gray-600 text-white font-nunito font-semibold p-2 rounded-md shadow-md mt-10 
-                          mobile:py-2 w-48 mobile:w-full  hover:bg-white hover:text-gray-600 cursor-pointer hover:border hover:border-black"
+                          mobile:py-2 w-48 mobile:w-full hover:bg-white hover:text-gray-600 cursor-pointer hover:border hover:border-black"
                         type="button"
                         onClick={handleLogout}
                       >

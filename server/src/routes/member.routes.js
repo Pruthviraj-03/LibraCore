@@ -14,6 +14,6 @@ router.route("/me").get(authMiddleWare, getMyData);
 router.route("/me/borrowed").get(authMiddleWare, getBorrowBooks);
 router.route("/me/returned").get(authMiddleWare, getReturnBooks);
 router.route("/me/history").get(authMiddleWare, getHistoryMe);
-router.route("/me").delete(authMiddleWare, deleteMe);
+router.route("/deleteme").delete(authMiddleWare, deleteMe);
 
 export { router };
