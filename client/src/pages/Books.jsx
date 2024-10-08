@@ -46,6 +46,32 @@ const Books = () => {
     }
   }, [userData, navigate]);
 
+  const handleRefreshPage = () => {
+    navigate("/books");
+    window.location.reload();
+  };
+
+  const handleBookAction = async (bookId, action) => {
+    try {
+      if (action === "BORROW") {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+      } else {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+      }
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -73,11 +99,20 @@ const Books = () => {
                 }
               })
               .map((curElem) => {
-                const { title, author, description, image } = curElem;
+                const {
+                  _id: bookId,
+                  title,
+                  author,
+                  description,
+                  image,
+                } = curElem;
+
+                const isBookBorrowed =
+                  userData?.borrowBooks?.includes(bookId) || false;
 
                 return (
                   <div
-                    key={curElem.rank}
+                    key={bookId}
                     className="max-w-xs mx-auto overflow-hidden bg-white rounded-lg shadow-xl border"
                   >
                     <img
@@ -99,13 +134,27 @@ const Books = () => {
                     </div>
 
                     {userData && userData.role === "MEMBER" && (
-                      <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
-                        <span className="text-2xl">BORROW BOOK</span>
+                      <div
+                        className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"
+                        onClick={() => {
+                          handleBookAction(
+                            bookId,
+                            isBookBorrowed ? "RETURN" : "BORROW"
+                          );
+                          handleRefreshPage();
+                        }}
+                      >
+                        <span className="text-2xl">
+                          {isBookBorrowed ? "RETURN BOOK" : "BORROW BOOK"}
+                        </span>
                       </div>
                     )}
 
                     {userData && userData.role === "LIBRARIAN" && (
-                      <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
+                      <div
+                        className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"
+                        onClick={() => {}}
+                      >
                         <span className="text-2xl">DELETE BOOK</span>
                       </div>
                     )}

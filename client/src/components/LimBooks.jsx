@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Spinner } from "./index";
+import { useNavigate } from "react-router-dom";
 
 const LimBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,8 +39,38 @@ const LimBooks = () => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (userData) {
+      getData();
+    } else {
+      navigate("/login");
+    }
+  }, [userData, navigate]);
+
+  const handleRefreshPage = () => {
+    navigate("/");
+    window.location.reload();
+  };
+
+  const handleBookAction = async (bookId, action) => {
+    try {
+      if (action === "BORROW") {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+      } else {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+      }
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-gray-100 py-10 tablet:pt-40 mobile:pt-10 laptop:pt-0">
@@ -47,11 +79,14 @@ const LimBooks = () => {
       ) : (
         <div className="pc:container mx-auto flex flex-wrap gap-10 py-10">
           {books.slice(0, 8).map((curElem) => {
-            const { title, author, description, image } = curElem;
+            const { _id: bookId, title, author, description, image } = curElem;
+
+            const isBookBorrowed =
+              userData?.borrowBooks?.includes(bookId) || false;
 
             return (
               <div
-                key={curElem.rank}
+                key={bookId}
                 className="max-w-xs mx-auto overflow-hidden bg-white rounded-lg shadow-xl border"
               >
                 <img
@@ -69,13 +104,27 @@ const LimBooks = () => {
                 </div>
 
                 {userData && userData.role === "MEMBER" && (
-                  <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
-                    <span className="text-2xl">BORROW BOOK</span>
+                  <div
+                    className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"
+                    onClick={() => {
+                      handleBookAction(
+                        bookId,
+                        isBookBorrowed ? "RETURN" : "BORROW"
+                      );
+                      handleRefreshPage();
+                    }}
+                  >
+                    <span className="text-2xl">
+                      {isBookBorrowed ? "RETURN BOOK" : "BORROW BOOK"}
+                    </span>
                   </div>
                 )}
 
                 {userData && userData.role === "LIBRARIAN" && (
-                  <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
+                  <div
+                    className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"
+                    onClick={() => {}}
+                  >
                     <span className="text-2xl">DELETE BOOK</span>
                   </div>
                 )}

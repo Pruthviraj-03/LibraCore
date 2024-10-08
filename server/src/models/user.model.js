@@ -30,19 +30,16 @@ const userSchema = new mongoose.Schema(
       enum: ["ACTIVE", "DELETED"],
       default: "ACTIVE",
     },
-    history: [
+    borrowBooks: [
       {
-        bookId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "books",
-        },
-        borrowDate: {
-          type: Date,
-          default: Date.now,
-        },
-        returnDate: {
-          type: Date,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Book",
+      },
+    ],
+    returnBooks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Book",
       },
     ],
   },

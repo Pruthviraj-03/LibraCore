@@ -9,7 +9,7 @@ const ReturnHistory = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -30,11 +30,12 @@ const ReturnHistory = () => {
 
   const getData = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:8000/api/v1/books/allbooks"
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/history/return-history",
+        { email: userData.email }, // Passing email in request body
+        { withCredentials: true }
       );
-      setBooks(res.data.data || []);
-      console.log(res.data);
+      setBooks(res.data.data.returnBooks || []);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -42,8 +43,38 @@ const ReturnHistory = () => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (userData) {
+      getData();
+    } else {
+      navigate("/login");
+    }
+  }, [userData, navigate]);
+
+  const handleRefreshPage = () => {
+    navigate("/history");
+    window.location.reload();
+  };
+
+  const handleBookAction = async (bookId, action) => {
+    try {
+      if (action === "BORROW") {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+      } else {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+      }
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-gray-100 py-10 tablet:pt-40 mobile:pt-10 laptop:pt-0">
@@ -66,7 +97,6 @@ const ReturnHistory = () => {
           </div>
           <div className="pc:container mx-auto flex flex-wrap gap-10 py-10">
             {books
-              .slice(0, 4)
               .filter((val) => {
                 if (search === "") {
                   return val;
@@ -77,11 +107,20 @@ const ReturnHistory = () => {
                 }
               })
               .map((curElem) => {
-                const { title, author, description, image } = curElem;
+                const {
+                  _id: bookId,
+                  title,
+                  author,
+                  description,
+                  image,
+                } = curElem;
+
+                const isBookBorrowed =
+                  userData?.borrowBooks?.includes(bookId) || false;
 
                 return (
                   <div
-                    key={curElem.rank}
+                    key={bookId}
                     className="max-w-xs mx-auto overflow-hidden bg-white rounded-lg shadow-xl border"
                   >
                     <img
@@ -100,14 +139,22 @@ const ReturnHistory = () => {
                       <p className="mt-1 text-sm text-gray-600">
                         {description}
                       </p>
-                      <h1 className="text-lg font-bold py-2">
-                        Date: 25th September, 2024
-                      </h1>
                     </div>
 
                     {userData && userData.role === "MEMBER" && (
-                      <div className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300">
-                        <span className="text-2xl">BORROWED BOOK</span>
+                      <div
+                        className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"
+                        onClick={() => {
+                          handleBookAction(
+                            bookId,
+                            isBookBorrowed ? "RETURN" : "BORROW"
+                          );
+                          handleRefreshPage();
+                        }}
+                      >
+                        <span className="text-2xl">
+                          {isBookBorrowed ? "RETURN BOOK" : "BORROW BOOK"}
+                        </span>
                       </div>
                     )}
                   </div>
