@@ -11,28 +11,21 @@ const getAllBooks = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, allBooks, "Books retrieved successfully"));
 });
 
-// Add a new book
 const addNewBook = asyncHandler(async (req, res) => {
-  const newBook = await books.create(req.body);
+  const { title, author, description, image } = req.body;
+
+  // Check if all fields are provided
+  if (!title || !author || !description || !image) {
+    throw new ApiError(
+      400,
+      "All fields (title, author, description, image) are required"
+    );
+  }
+
+  const newBook = await books.create({ title, author, description, image });
   res
     .status(201)
     .json(new ApiResponse(201, newBook, "Book added successfully"));
-});
-
-// Update a book
-const updateBook = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const book = await books.findById(id);
-
-  if (!book) {
-    throw new ApiError(404, "Book not found");
-  }
-
-  // Update book details
-  Object.assign(book, req.body);
-  await book.save();
-
-  res.status(200).json(new ApiResponse(200, book, "Book updated successfully"));
 });
 
 // Delete a book
@@ -50,4 +43,4 @@ const deleteBook = asyncHandler(async (req, res) => {
 });
 
 // Exporting the controller methods
-export { getAllBooks, addNewBook, updateBook, deleteBook };
+export { getAllBooks, addNewBook, deleteBook };

@@ -2,18 +2,19 @@ import { Router } from "express";
 import {
   getAllBooks,
   addNewBook,
-  updateBook,
   deleteBook,
 } from "../controllers/books.controller.js";
 import { authMiddleWare } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/allbooks").get(getAllBooks).post(authMiddleWare, addNewBook);
+// Route to get all books
+router.route("/allbooks").get(getAllBooks);
 
-router
-  .route("/allbooks/:id")
-  .put(authMiddleWare, updateBook)
-  .delete(authMiddleWare, deleteBook);
+// Route to add a new book (requires authentication)
+router.route("/addbook").post(authMiddleWare, addNewBook);
+
+// Route to delete a book (requires authentication)
+router.route("/allbooks/:id").delete(authMiddleWare, deleteBook);
 
 export { router };
