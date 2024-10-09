@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "tpcoin",
+  "name": "libracore",
   "builds": [
     {
       "src": "server/index.js",
