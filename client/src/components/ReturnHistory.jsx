@@ -94,7 +94,7 @@ const ReturnHistory = ({ memberData }) => {
             {books
               .filter((val) => {
                 if (search === "") {
-                  return true; // Include all when no search term
+                  return true;
                 }
                 return val.title.toLowerCase().includes(search.toLowerCase());
               })

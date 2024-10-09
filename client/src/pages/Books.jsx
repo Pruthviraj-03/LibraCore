@@ -3,18 +3,18 @@ import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/index";
-import { AiOutlinePlus } from "react-icons/ai"; // Import plus icon
+import { AiOutlinePlus } from "react-icons/ai";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
   const [userData, setUserData] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false); // State for form visibility
+  const [showAddForm, setShowAddForm] = useState(false);
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
     description: "",
-    image: "", // New field for image link
+    image: "",
   });
   const navigate = useNavigate();
 

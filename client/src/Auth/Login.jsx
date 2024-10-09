@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import login from "../Images/signup.png";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirecting
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Header } from "../components/index";
-import axios from "axios"; // Axios for API requests
+import axios from "axios";
 
 const Login = () => {
   const [visible, setVisible] = useState(false);
   const InputType = visible ? "text" : "password";
-  const navigate = useNavigate(); // For navigation after successful login
+  const navigate = useNavigate();
 
   const [userLogin, setUserLogin] = useState({
     email: "",
@@ -27,13 +27,13 @@ const Login = () => {
         "http://localhost:8000/api/v1/users/login",
         {
           email: userLogin.email,
-          password: userLogin.passwords, // Send correct password field
+          password: userLogin.passwords,
         }
       );
 
       if (response.status === 200) {
         alert("Login successful!");
-        navigate("/"); // Redirect to the home page after login
+        navigate("/");
       }
     } catch (error) {
       console.log("Error logging in:", error);

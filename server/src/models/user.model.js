@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// User Schema
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -46,7 +45,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash password before saving the user
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
@@ -54,7 +52,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// Generate Access Token
 userSchema.methods.generateAccessToken = function () {
   try {
     return jwt.sign(
@@ -69,7 +66,6 @@ userSchema.methods.generateAccessToken = function () {
   }
 };
 
-// Generate Refresh Token
 userSchema.methods.generateRefreshToken = function () {
   try {
     return jwt.sign(

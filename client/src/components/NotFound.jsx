@@ -1,6 +1,5 @@
 import React from "react";
 import notfound from "../Images/notfound.png";
-import { Link } from "react-router-dom";
 import Button from "./Button";
 
 const NotFound = ({ search }) => {

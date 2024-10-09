@@ -6,7 +6,6 @@ import { CookieToken } from "../utils/CookieToken.utils.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-// Generate Access and Refresh Tokens
 const generateAccessAndRefreshTokens = async (userId) => {
   const user = await users.findById(userId);
   if (!user) {
@@ -52,7 +51,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       user._id
     );
 
-    // Set cookies using CookieToken function
     CookieToken(user, res, { accessToken, refreshToken });
 
     res.json(
@@ -67,17 +65,14 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-// Signup Controller
 const signup = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
 
-  // Check if user already exists
   const existingUser = await users.findOne({ email });
   if (existingUser) {
     throw new ApiError(400, "User already exists with this email");
   }
 
-  // Create new user
   const user = await users.create({
     name,
     email,
@@ -85,12 +80,10 @@ const signup = asyncHandler(async (req, res) => {
     role,
   });
 
-  // Generate tokens
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     user._id
   );
 
-  // Set tokens in cookies
   CookieToken(user, res, { accessToken, refreshToken });
 
   res
@@ -104,28 +97,23 @@ const signup = asyncHandler(async (req, res) => {
     );
 });
 
-// Login Controller
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  // Find user by email
   const user = await users.findOne({ email });
   if (!user) {
     throw new ApiError(401, "Invalid credentials");
   }
 
-  // Compare password
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     throw new ApiError(401, "Invalid credentials");
   }
 
-  // Generate tokens
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     user._id
   );
 
-  // Set tokens in cookies
   CookieToken(user, res, { accessToken, refreshToken });
 
   res
@@ -139,7 +127,6 @@ const login = asyncHandler(async (req, res) => {
     );
 });
 
-// Logout Controller
 const logout = asyncHandler(async (req, res) => {
   try {
     const options = {
@@ -162,18 +149,15 @@ const logout = asyncHandler(async (req, res) => {
   }
 });
 
-// Delete Me Controller
 const deleteMe = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
-  // Find and delete the user
   const user = await users.findByIdAndDelete(userId);
 
   if (!user) {
     throw new ApiError(404, "User not found");
   }
 
-  // Clear cookies
   const options = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -190,7 +174,6 @@ const deleteMe = asyncHandler(async (req, res) => {
   console.log("User account deleted successfully");
 });
 
-// Get My Data Controller
 const getMyData = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 

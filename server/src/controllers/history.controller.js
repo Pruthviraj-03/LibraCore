@@ -59,14 +59,14 @@ const returnBook = asyncHandler(async (req, res) => {
 const getBorrowedBooks = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
-  console.log("Fetching borrowed books for email:", req.body); // Log the email being processed
+  console.log("Fetching borrowed books for email:", req.body);
 
   const member = await users.findOne({ email }).populate("borrowBooks");
 
-  console.log("Member found:", member); // Log the member object
+  console.log("Member found:", member);
 
   if (!member || member.status === "DELETED") {
-    console.error("Member not found or account is deactivated"); // Log the error
+    console.error("Member not found or account is deactivated");
     throw new ApiError(404, "Member not found or account is deactivated");
   }
 
@@ -84,14 +84,14 @@ const getBorrowedBooks = asyncHandler(async (req, res) => {
 const getReturnedBooks = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
-  console.log("Fetching returned books for email:", email); // Log the email being processed
+  console.log("Fetching returned books for email:", email);
 
-  const member = await users.findOne({ email }).populate("returnBooks"); // Populate returnBooks for the user
+  const member = await users.findOne({ email }).populate("returnBooks");
 
-  console.log("Member found:", member); // Log the member object
+  console.log("Member found:", member);
 
   if (!member || member.status === "DELETED") {
-    console.error("Member not found or account is deactivated"); // Log the error
+    console.error("Member not found or account is deactivated");
     throw new ApiError(404, "Member not found or account is deactivated");
   }
 
