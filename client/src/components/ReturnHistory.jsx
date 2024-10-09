@@ -4,12 +4,12 @@ import { Spinner } from "./index";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const ReturnHistory = () => {
+const ReturnHistory = ({ memberData }) => {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState([]); // Start with null
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -29,26 +29,30 @@ const ReturnHistory = () => {
   }, [navigate]);
 
   const getData = async () => {
+    if (!memberData) return; // Exit if memberData is not available
+
+    setLoading(true); // Start loading
     try {
       const res = await axios.post(
         "http://localhost:8000/api/v1/history/return-history",
-        { email: userData.email }, // Passing email in request body
+        { email: memberData.email }, // Ensure memberData has email
         { withCredentials: true }
       );
       setBooks(res.data.data.returnBooks || []);
     } catch (error) {
       console.log(error);
-      setLoading(false);
+    } finally {
+      setLoading(false); // Stop loading regardless of success or failure
     }
   };
 
   useEffect(() => {
-    if (userData) {
+    if (userData && memberData) {
       getData();
-    } else {
+    } else if (!userData) {
       navigate("/login");
     }
-  }, [userData, navigate]);
+  }, [userData, memberData, navigate]);
 
   const handleRefreshPage = () => {
     navigate("/history");
@@ -57,20 +61,13 @@ const ReturnHistory = () => {
 
   const handleBookAction = async (bookId, action) => {
     try {
-      if (action === "BORROW") {
-        await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
-          {},
-          { withCredentials: true }
-        );
-      } else {
-        await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
-          {},
-          { withCredentials: true }
-        );
-      }
-      getData();
+      const endpoint =
+        action === "BORROW"
+          ? `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`
+          : `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`;
+
+      await axios.post(endpoint, {}, { withCredentials: true });
+      getData(); // Refresh the book list
     } catch (error) {
       console.log(error);
     }
@@ -91,20 +88,16 @@ const ReturnHistory = () => {
               type="text"
               placeholder="Search"
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full py-3 pl-12 pr-4 text-gray-700 bg-white border border-gray-400
-                    rounded-md focus:border-gray-600 focus:outline-none"
+              className="w-full py-3 pl-12 pr-4 text-gray-700 bg-white border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none"
             />
           </div>
           <div className="pc:container mx-auto flex flex-wrap gap-10 py-10">
             {books
               .filter((val) => {
                 if (search === "") {
-                  return val;
-                } else if (
-                  val.title.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return val;
+                  return true; // Include all when no search term
                 }
+                return val.title.toLowerCase().includes(search.toLowerCase());
               })
               .map((curElem) => {
                 const {
@@ -128,7 +121,6 @@ const ReturnHistory = () => {
                       src={image}
                       alt="books"
                     />
-
                     <div className="px-4 py-2 h-72">
                       <h1 className="text-3xl font-bold text-gray-800 uppercase">
                         {title}
@@ -140,7 +132,6 @@ const ReturnHistory = () => {
                         {description}
                       </p>
                     </div>
-
                     {userData && userData.role === "MEMBER" && (
                       <div
                         className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"

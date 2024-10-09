@@ -4,7 +4,7 @@ import { Spinner } from "./index";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const BorrowHistory = () => {
+const BorrowHistory = ({ memberData }) => {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,10 +29,13 @@ const BorrowHistory = () => {
   }, [navigate]);
 
   const getData = async () => {
+    if (!memberData) return;
+
+    setLoading(true); // Start loading
     try {
       const res = await axios.post(
         "http://localhost:8000/api/v1/history/borrow-history",
-        { email: userData.email },
+        { email: memberData.email }, // Use memberData's email
         { withCredentials: true }
       );
       setBooks(res.data.data.borrowBooks || []);
@@ -40,15 +43,16 @@ const BorrowHistory = () => {
       console.log(error);
       setLoading(false);
     }
+    setLoading(false); // End loading
   };
 
   useEffect(() => {
-    if (userData) {
-      getData();
+    if (memberData) {
+      getData(); // Fetch data when memberData is available
     } else {
       navigate("/login");
     }
-  }, [userData, navigate]);
+  }, [memberData, navigate]);
 
   const handleRefreshPage = () => {
     navigate("/history");
@@ -59,13 +63,13 @@ const BorrowHistory = () => {
     try {
       if (action === "BORROW") {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          `http://localhost:8000/api/v1/history/members/${memberData._id}/borrow/${bookId}`, // Use memberData's ID
           {},
           { withCredentials: true }
         );
       } else {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          `http://localhost:8000/api/v1/history/members/${memberData._id}/return/${bookId}`, // Use memberData's ID
           {},
           { withCredentials: true }
         );
