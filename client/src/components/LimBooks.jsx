@@ -72,6 +72,20 @@ const LimBooks = () => {
     }
   };
 
+  const handleDelete = async (bookId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/v1/books/allbooks/${bookId}`,
+        {
+          withCredentials: true,
+        }
+      );
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-gray-100 py-10 tablet:pt-40 mobile:pt-10 laptop:pt-0">
       {loading ? (
@@ -123,7 +137,7 @@ const LimBooks = () => {
                 {userData && userData.role === "LIBRARIAN" && (
                   <div
                     className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"
-                    onClick={() => {}}
+                    onClick={() => handleDelete(bookId)}
                   >
                     <span className="text-2xl">DELETE BOOK</span>
                   </div>

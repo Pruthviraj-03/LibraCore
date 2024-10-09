@@ -93,6 +93,20 @@ const Books = () => {
     }
   };
 
+  const handleDelete = async (bookId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/v1/books/allbooks/${bookId}`,
+        {
+          withCredentials: true,
+        }
+      );
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -116,64 +130,71 @@ const Books = () => {
               <AiOutlinePlus className="text-6xl text-gray-500" />
             </div>
 
-            {showAddForm && (
-              <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white p-8 rounded-md shadow-lg">
-                  <h2 className="text-2xl mb-4">Add a New Book</h2>
-                  <input
-                    type="text"
-                    placeholder="Title"
-                    value={newBook.title}
-                    onChange={(e) =>
-                      setNewBook({ ...newBook, title: e.target.value })
-                    }
-                    className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Author"
-                    value={newBook.author}
-                    onChange={(e) =>
-                      setNewBook({ ...newBook, author: e.target.value })
-                    }
-                    className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
-                  />
-                  <textarea
-                    placeholder="Description"
-                    value={newBook.description}
-                    onChange={(e) =>
-                      setNewBook({ ...newBook, description: e.target.value })
-                    }
-                    className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
-                  ></textarea>
-                  <input
-                    type="text"
-                    placeholder="Image Link"
-                    value={newBook.image}
-                    onChange={(e) =>
-                      setNewBook({ ...newBook, image: e.target.value })
-                    }
-                    className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
-                  />
-                  <div className="flex justify-between">
-                    <button
-                      className="px-4 py-2 bg-green-500 text-white rounded"
-                      onClick={() => {
-                        handleAddBook();
-                        handleRefreshPage();
-                      }}
-                    >
-                      Add Book
-                    </button>
-                    <button
-                      className="px-4 py-2 bg-red-500 text-white rounded"
-                      onClick={() => setShowAddForm(false)}
-                    >
-                      Cancel
-                    </button>
+            {userData && userData.role === "LIBRARIAN" && (
+              <>
+                {showAddForm && (
+                  <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white p-8 rounded-md shadow-lg">
+                      <h2 className="text-2xl mb-4">Add a New Book</h2>
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        value={newBook.title}
+                        onChange={(e) =>
+                          setNewBook({ ...newBook, title: e.target.value })
+                        }
+                        className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Author"
+                        value={newBook.author}
+                        onChange={(e) =>
+                          setNewBook({ ...newBook, author: e.target.value })
+                        }
+                        className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
+                      />
+                      <textarea
+                        placeholder="Description"
+                        value={newBook.description}
+                        onChange={(e) =>
+                          setNewBook({
+                            ...newBook,
+                            description: e.target.value,
+                          })
+                        }
+                        className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
+                      ></textarea>
+                      <input
+                        type="text"
+                        placeholder="Image Link"
+                        value={newBook.image}
+                        onChange={(e) =>
+                          setNewBook({ ...newBook, image: e.target.value })
+                        }
+                        className="w-full py-2 px-4 mb-4 border border-gray-400 rounded"
+                      />
+                      <div className="flex justify-between">
+                        <button
+                          className="px-4 py-2 bg-green-500 text-white rounded"
+                          onClick={() => {
+                            handleAddBook();
+                            handleRefreshPage();
+                          }}
+                        >
+                          Add Book
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-red-500 text-white rounded"
+                          onClick={() => setShowAddForm(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                )}
+              </>
             )}
 
             {books
@@ -241,7 +262,7 @@ const Books = () => {
                     {userData && userData.role === "LIBRARIAN" && (
                       <div
                         className="cursor-pointer flex items-center justify-center px-4 py-5 hover:text-gray-900 bg-gray-900 text-white hover:bg-white hover:border hover:border-t-gray-200 transition-colors duration-300"
-                        onClick={() => {}}
+                        onClick={() => handleDelete(bookId)}
                       >
                         <span className="text-2xl">DELETE BOOK</span>
                       </div>

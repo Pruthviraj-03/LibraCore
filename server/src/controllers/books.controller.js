@@ -30,13 +30,15 @@ const addNewBook = asyncHandler(async (req, res) => {
 
 // Delete a book
 const deleteBook = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const deletedBook = await books.findByIdAndDelete(id);
+  const { id } = req.params; // Get the book ID from the request params
+  const deletedBook = await books.findByIdAndDelete(id); // Find and delete the book by ID
 
   if (!deletedBook) {
+    // If the book was not found, return an error
     throw new ApiError(404, "Book not found");
   }
 
+  // Send a successful response with the deleted book data
   res
     .status(200)
     .json(new ApiResponse(200, deletedBook, "Book deleted successfully"));
