@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Spinner } from "./index";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LimBooks = () => {
   const [books, setBooks] = useState([]);
@@ -59,12 +61,20 @@ const LimBooks = () => {
           {},
           { withCredentials: true }
         );
+        toast.success("Borrow Book Success!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
       } else {
         await axios.post(
           `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
           {},
           { withCredentials: true }
         );
+        toast.success("Return Book Success!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
       }
       getData();
     } catch (error) {
@@ -80,6 +90,10 @@ const LimBooks = () => {
           withCredentials: true,
         }
       );
+      toast.info("Delete Book Success!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       getData();
     } catch (error) {
       console.log(error);

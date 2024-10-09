@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Header, BorrowHistory, ReturnHistory } from "../components/index";
+import {
+  Header,
+  BorrowHistory,
+  ReturnHistory,
+  ScrollToTop,
+} from "../components/index";
 import { useNavigate } from "react-router-dom";
 
 const History = () => {
@@ -31,6 +36,7 @@ const History = () => {
           <Header />
           <BorrowHistory />
           <ReturnHistory />
+          <ScrollToTop />
         </>
       )}
     </div>

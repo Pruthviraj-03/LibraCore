@@ -3,6 +3,8 @@ import axios from "axios";
 import { Spinner } from "./index";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BorrowHistory = ({ memberData }) => {
   const navigate = useNavigate();
@@ -60,12 +62,27 @@ const BorrowHistory = ({ memberData }) => {
 
   const handleBookAction = async (bookId, action) => {
     try {
-      const url =
-        action === "BORROW"
-          ? `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`
-          : `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`;
-
-      await axios.post(url, {}, { withCredentials: true });
+      if (action === "BORROW") {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+        toast.success("Borrow Book Success!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      } else {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+        toast.success("Return Book Success!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      }
       getData();
     } catch (error) {
       console.log(error);

@@ -5,6 +5,7 @@ import {
   MemberData,
   BorrowHistory,
   ReturnHistory,
+  ScrollToTop,
 } from "../components/index";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -62,6 +63,7 @@ const Member = () => {
           ) : (
             <div>No member data found.</div>
           )}
+          <ScrollToTop />
         </>
       ) : (
         <div>Access Denied. Only librarians can view this page.</div>

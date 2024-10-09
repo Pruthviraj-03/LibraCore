@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Header } from "../components/index";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const [visible, setVisible] = useState(false);
@@ -16,9 +18,6 @@ const SignUp = () => {
     passwords: "",
     role: "MEMBER",
   });
-
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputs = (e) => {
     const { name, value } = e.target;
@@ -34,10 +33,16 @@ const SignUp = () => {
         password: userLogin.passwords,
         role: userLogin.role,
       });
-      setSuccessMessage("Signup successful! Redirecting to login...");
+      toast.success("Signup successful! Redirecting to login...", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Signup failed");
+      toast.error("Signup failed!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
     }
   };
 
@@ -133,17 +138,6 @@ const SignUp = () => {
                   SignUp
                 </button>
               </form>
-
-              {errorMessage && (
-                <div className="text-red-500 text-center mt-3">
-                  {errorMessage}
-                </div>
-              )}
-              {successMessage && (
-                <div className="text-green-500 text-center mt-3">
-                  {successMessage}
-                </div>
-              )}
 
               <div className="text-gray-700 text-sm font-semibold px-2 my-6 flex flex-col justify-center items-center gap-2">
                 <Link

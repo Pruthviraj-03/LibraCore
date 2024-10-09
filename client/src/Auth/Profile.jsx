@@ -3,6 +3,8 @@ import ProfilePng from "../Images/profile.png";
 import { Header } from "../components/index";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const [userData, setUserData] = useState([]);
@@ -40,6 +42,10 @@ const Profile = () => {
         { withCredentials: true }
       );
       setUserData(null);
+      toast.info("You logged out!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       navigate("/login");
     } catch (error) {
       console.error("Error during logout:", error);
@@ -51,6 +57,10 @@ const Profile = () => {
       try {
         await axios.delete("http://localhost:8000/api/v1/users/deleteme", {
           withCredentials: true,
+        });
+        toast.info("You deleted your account successfully!", {
+          position: "top-center",
+          autoClose: 3000,
         });
         navigate("/");
       } catch (error) {

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../components/index";
+import { Header, ScrollToTop } from "../components/index";
 import { AiOutlinePlus } from "react-icons/ai";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -61,12 +63,27 @@ const Books = () => {
 
   const handleBookAction = async (bookId, action) => {
     try {
-      const url =
-        action === "BORROW"
-          ? `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`
-          : `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`;
-
-      await axios.post(url, {}, { withCredentials: true });
+      if (action === "BORROW") {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+        toast.success("Borrow Book Success!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      } else {
+        await axios.post(
+          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          {},
+          { withCredentials: true }
+        );
+        toast.success("Return Book Success!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+      }
       getData();
     } catch (error) {
       console.log(error);
@@ -77,6 +94,10 @@ const Books = () => {
     try {
       await axios.post("http://localhost:8000/api/v1/books/addbook", newBook, {
         withCredentials: true,
+      });
+      toast.success("New Book Added Success!", {
+        position: "top-center",
+        autoClose: 3000,
       });
       setShowAddForm(false);
       setNewBook({ title: "", author: "", description: "" });
@@ -94,6 +115,10 @@ const Books = () => {
           withCredentials: true,
         }
       );
+      toast.info("Borrow Delete Success!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       getData();
     } catch (error) {
       console.log(error);
@@ -265,6 +290,7 @@ const Books = () => {
           </div>
         </div>
       )}
+      <ScrollToTop />
     </>
   );
 };

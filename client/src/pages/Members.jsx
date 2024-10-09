@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
-import { Header } from "../components/index";
+import { Header, ScrollToTop } from "../components/index";
 import { useNavigate } from "react-router-dom";
 
 const Members = () => {
@@ -97,6 +97,7 @@ const Members = () => {
           </div>
         </div>
       )}
+      <ScrollToTop />
     </>
   );
 };

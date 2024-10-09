@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Header } from "../components/index";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [visible, setVisible] = useState(false);
@@ -30,14 +32,17 @@ const Login = () => {
           password: userLogin.passwords,
         }
       );
-
-      if (response.status === 200) {
-        alert("Login successful!");
-        navigate("/");
-      }
+      toast.success("Login successful!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      navigate("/");
     } catch (error) {
       console.log("Error logging in:", error);
-      alert(error.response?.data?.message || "Login failed");
+      toast.error("Login failed!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
     }
   };
 

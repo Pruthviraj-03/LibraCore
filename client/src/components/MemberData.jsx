@@ -2,6 +2,8 @@ import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MemberData = ({ memberData }) => {
   const navigate = useNavigate();
@@ -14,6 +16,10 @@ const MemberData = ({ memberData }) => {
           withCredentials: true,
         }
       );
+      toast.info("Delete member success!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       console.log(response.data);
       navigate("/members");
     } catch (error) {
