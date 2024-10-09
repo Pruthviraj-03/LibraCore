@@ -47,14 +47,12 @@ import { router as userRouter } from "./src/routes/users.routes.js";
 import { router as booksRouter } from "./src/routes/books.routes.js";
 import { router as historyRouter } from "./src/routes/history.routes.js";
 import { router as librarianRouter } from "./src/routes/librarian.routes.js";
-import { router as memberRouter } from "./src/routes/member.routes.js";
 
 //routes declaration
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/books", booksRouter);
 app.use("/api/v1/history", historyRouter);
 app.use("/api/v1/librarian", librarianRouter);
-app.use("/api/v1/member", memberRouter);
 
 // http://localhost:8000/api/v1
 
