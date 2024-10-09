@@ -29,30 +29,29 @@ const BorrowHistory = ({ memberData }) => {
   }, [navigate]);
 
   const getData = async () => {
-    if (!memberData) return;
-
-    setLoading(true); // Start loading
+    if (!userData) return;
+    setLoading(true);
     try {
+      const email =
+        userData.role === "MEMBER" ? userData.email : memberData.email;
       const res = await axios.post(
         "http://localhost:8000/api/v1/history/borrow-history",
-        { email: memberData.email }, // Use memberData's email
+        { email },
         { withCredentials: true }
       );
       setBooks(res.data.data.borrowBooks || []);
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
     }
-    setLoading(false); // End loading
   };
 
   useEffect(() => {
-    if (memberData) {
-      getData(); // Fetch data when memberData is available
-    } else {
-      navigate("/login");
+    if (userData) {
+      getData();
     }
-  }, [memberData, navigate]);
+  }, [userData, memberData, navigate]);
 
   const handleRefreshPage = () => {
     navigate("/history");
@@ -61,19 +60,12 @@ const BorrowHistory = ({ memberData }) => {
 
   const handleBookAction = async (bookId, action) => {
     try {
-      if (action === "BORROW") {
-        await axios.post(
-          `http://localhost:8000/api/v1/history/members/${memberData._id}/borrow/${bookId}`, // Use memberData's ID
-          {},
-          { withCredentials: true }
-        );
-      } else {
-        await axios.post(
-          `http://localhost:8000/api/v1/history/members/${memberData._id}/return/${bookId}`, // Use memberData's ID
-          {},
-          { withCredentials: true }
-        );
-      }
+      const url =
+        action === "BORROW"
+          ? `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`
+          : `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`;
+
+      await axios.post(url, {}, { withCredentials: true });
       getData();
     } catch (error) {
       console.log(error);
@@ -95,8 +87,7 @@ const BorrowHistory = ({ memberData }) => {
               type="text"
               placeholder="Search"
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full py-3 pl-12 pr-4 text-gray-700 bg-white border border-gray-400
-                    rounded-md focus:border-gray-600 focus:outline-none"
+              className="w-full py-3 pl-12 pr-4 text-gray-700 bg-white border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none"
             />
           </div>
           <div className="pc:container mx-auto flex flex-wrap gap-10 py-10">
@@ -133,7 +124,6 @@ const BorrowHistory = ({ memberData }) => {
                       src={image}
                       alt="books"
                     />
-
                     <div className="px-4 py-2 h-72">
                       <h1 className="text-3xl font-bold text-gray-800 uppercase">
                         {title}

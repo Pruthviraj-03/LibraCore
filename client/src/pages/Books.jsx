@@ -61,19 +61,12 @@ const Books = () => {
 
   const handleBookAction = async (bookId, action) => {
     try {
-      if (action === "BORROW") {
-        await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
-          {},
-          { withCredentials: true }
-        );
-      } else {
-        await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
-          {},
-          { withCredentials: true }
-        );
-      }
+      const url =
+        action === "BORROW"
+          ? `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`
+          : `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`;
+
+      await axios.post(url, {}, { withCredentials: true });
       getData();
     } catch (error) {
       console.log(error);
@@ -121,17 +114,16 @@ const Books = () => {
               className="w-full py-3 pl-12 pr-4 text-gray-700 bg-white border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none"
             />
           </div>
-
           <div className="pc:container mx-auto flex flex-wrap gap-10 pt-5 pb-20">
-            <div
-              className="max-w-xs w-full cursor-pointer mx-auto overflow-hidden bg-white rounded-lg shadow-xl border flex items-center justify-center"
-              onClick={() => setShowAddForm(true)}
-            >
-              <AiOutlinePlus className="text-6xl text-gray-500" />
-            </div>
-
             {userData && userData.role === "LIBRARIAN" && (
-              <>
+              <div>
+                <div
+                  className="max-w-xs w-full cursor-pointer mx-auto overflow-hidden bg-white rounded-lg shadow-xl border flex items-center justify-center"
+                  onClick={() => setShowAddForm(true)}
+                >
+                  <AiOutlinePlus className="text-6xl text-gray-500" />
+                </div>
+
                 {showAddForm && (
                   <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-8 rounded-md shadow-lg">
@@ -194,7 +186,7 @@ const Books = () => {
                     </div>
                   </div>
                 )}
-              </>
+              </div>
             )}
 
             {books

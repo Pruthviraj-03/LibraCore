@@ -9,7 +9,7 @@ const ReturnHistory = ({ memberData }) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [userData, setUserData] = useState([]); // Start with null
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -29,28 +29,27 @@ const ReturnHistory = ({ memberData }) => {
   }, [navigate]);
 
   const getData = async () => {
-    if (!memberData) return; // Exit if memberData is not available
-
-    setLoading(true); // Start loading
+    if (!userData) return;
+    setLoading(true);
     try {
+      const email =
+        userData.role === "MEMBER" ? userData.email : memberData.email;
       const res = await axios.post(
         "http://localhost:8000/api/v1/history/return-history",
-        { email: memberData.email }, // Ensure memberData has email
+        { email },
         { withCredentials: true }
       );
       setBooks(res.data.data.returnBooks || []);
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false); // Stop loading regardless of success or failure
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (userData && memberData) {
+    if (userData) {
       getData();
-    } else if (!userData) {
-      navigate("/login");
     }
   }, [userData, memberData, navigate]);
 

@@ -4,7 +4,7 @@ import { Header, BorrowHistory, ReturnHistory } from "../components/index";
 import { useNavigate } from "react-router-dom";
 
 const History = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {

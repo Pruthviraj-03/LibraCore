@@ -9,7 +9,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 const Member = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const [memberData, setMemberData] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
