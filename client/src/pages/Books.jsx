@@ -24,7 +24,7 @@ const Books = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/users/me",
+          "libra-core-api.vercel.app/api/v1/users/me",
           { withCredentials: true }
         );
         setUserData(response.data.data.user);
@@ -40,7 +40,7 @@ const Books = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/api/v1/books/allbooks"
+        "libra-core-api.vercel.app/api/v1/books/allbooks"
       );
       setBooks(res.data.data || []);
     } catch (error) {
@@ -65,7 +65,7 @@ const Books = () => {
     try {
       if (action === "BORROW") {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          `libra-core-api.vercel.app/api/v1/history/members/${userData._id}/borrow/${bookId}`,
           {},
           { withCredentials: true }
         );
@@ -75,7 +75,7 @@ const Books = () => {
         });
       } else {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          `libra-core-api.vercel.app/api/v1/history/members/${userData._id}/return/${bookId}`,
           {},
           { withCredentials: true }
         );
@@ -92,9 +92,13 @@ const Books = () => {
 
   const handleAddBook = async () => {
     try {
-      await axios.post("http://localhost:8000/api/v1/books/addbook", newBook, {
-        withCredentials: true,
-      });
+      await axios.post(
+        "libra-core-api.vercel.app/api/v1/books/addbook",
+        newBook,
+        {
+          withCredentials: true,
+        }
+      );
       toast.success("New Book Added Success!", {
         position: "top-center",
         autoClose: 3000,
@@ -110,7 +114,7 @@ const Books = () => {
   const handleDelete = async (bookId) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/v1/books/allbooks/${bookId}`,
+        `libra-core-api.vercel.app/api/v1/books/allbooks/${bookId}`,
         {
           withCredentials: true,
         }

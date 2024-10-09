@@ -11,7 +11,7 @@ const MemberData = ({ memberData }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/v1/librarian/members/${memberData._id}`,
+        `libra-core-api.vercel.app/api/v1/librarian/members/${memberData._id}`,
         {
           withCredentials: true,
         }

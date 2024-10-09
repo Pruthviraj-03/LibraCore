@@ -15,7 +15,7 @@ const Members = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/users/me",
+          "libra-core-api.vercel.app/api/v1/users/me",
           { withCredentials: true }
         );
         setUserData(response.data.data.user);
@@ -31,7 +31,7 @@ const Members = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/api/v1/librarian/members"
+        "libra-core-api.vercel.app/api/v1/librarian/members"
       );
       setMembers(res.data.data || []);
     } catch (error) {

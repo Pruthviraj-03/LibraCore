@@ -15,7 +15,7 @@ const LimBooks = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/users/me",
+          "libra-core-api.vercel.app/api/v1/users/me",
           { withCredentials: true }
         );
         setUserData(response.data.data.user);
@@ -30,7 +30,7 @@ const LimBooks = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/api/v1/books/allbooks"
+        "libra-core-api.vercel.app/api/v1/books/allbooks"
       );
       setBooks(res.data.data || []);
       console.log(res.data);
@@ -57,7 +57,7 @@ const LimBooks = () => {
     try {
       if (action === "BORROW") {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          `libra-core-api.vercel.app/api/v1/history/members/${userData._id}/borrow/${bookId}`,
           {},
           { withCredentials: true }
         );
@@ -67,7 +67,7 @@ const LimBooks = () => {
         });
       } else {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          `libra-core-api.vercel.app/api/v1/history/members/${userData._id}/return/${bookId}`,
           {},
           { withCredentials: true }
         );
@@ -85,7 +85,7 @@ const LimBooks = () => {
   const handleDelete = async (bookId) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/v1/books/allbooks/${bookId}`,
+        `libra-core-api.vercel.app/api/v1/books/allbooks/${bookId}`,
         {
           withCredentials: true,
         }

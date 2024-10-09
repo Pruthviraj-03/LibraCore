@@ -26,7 +26,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/login",
+        "libra-core-api.vercel.app/api/v1/users/login",
         {
           email: userLogin.email,
           password: userLogin.passwords,

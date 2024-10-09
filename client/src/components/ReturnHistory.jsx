@@ -17,7 +17,7 @@ const ReturnHistory = ({ memberData }) => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/users/me",
+          "libra-core-api.vercel.app/api/v1/users/me",
           { withCredentials: true }
         );
         setUserData(response.data.data.user);
@@ -37,7 +37,7 @@ const ReturnHistory = ({ memberData }) => {
       const email =
         userData.role === "MEMBER" ? userData.email : memberData.email;
       const res = await axios.post(
-        "http://localhost:8000/api/v1/history/return-history",
+        "libra-core-api.vercel.app/api/v1/history/return-history",
         { email },
         { withCredentials: true }
       );
@@ -64,7 +64,7 @@ const ReturnHistory = ({ memberData }) => {
     try {
       if (action === "BORROW") {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/borrow/${bookId}`,
+          `libra-core-api.vercel.app/api/v1/history/members/${userData._id}/borrow/${bookId}`,
           {},
           { withCredentials: true }
         );
@@ -74,7 +74,7 @@ const ReturnHistory = ({ memberData }) => {
         });
       } else {
         await axios.post(
-          `http://localhost:8000/api/v1/history/members/${userData._id}/return/${bookId}`,
+          `libra-core-api.vercel.app/api/v1/history/members/${userData._id}/return/${bookId}`,
           {},
           { withCredentials: true }
         );

@@ -9,7 +9,7 @@ const Button = ({ text, to }) => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/users/me",
+          "libra-core-api.vercel.app/api/v1/users/me",
           { withCredentials: true }
         );
         setUserData(response.data.data.user);

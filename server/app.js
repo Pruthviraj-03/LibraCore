@@ -17,7 +17,7 @@ const app = express();
 // Configure middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "libra-core.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -54,6 +54,6 @@ app.use("/api/v1/books", booksRouter);
 app.use("/api/v1/history", historyRouter);
 app.use("/api/v1/librarian", librarianRouter);
 
-// http://localhost:8000/api/v1
+// libra-core-api.vercel.app/api/v1
 
 export { app };

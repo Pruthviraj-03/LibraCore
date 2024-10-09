@@ -14,7 +14,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/users/me",
+          "libra-core-api.vercel.app/api/v1/users/me",
           { withCredentials: true }
         );
         setUserData(response.data.data.user);
@@ -37,7 +37,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:8000/api/v1/users/logout",
+        "libra-core-api.vercel.app/api/v1/users/logout",
         {},
         { withCredentials: true }
       );
@@ -55,7 +55,7 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
       try {
-        await axios.delete("http://localhost:8000/api/v1/users/deleteme", {
+        await axios.delete("libra-core-api.vercel.app/api/v1/users/deleteme", {
           withCredentials: true,
         });
         toast.info("You deleted your account successfully!", {
